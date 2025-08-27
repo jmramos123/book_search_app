@@ -169,6 +169,8 @@ dependencies:
 - No results → Helpful suggestions
 - Loading states → Progress indicators
 - Offline mode → Clear error messages
+  
+![Untitled design](https://github.com/user-attachments/assets/0757a59f-8633-4511-ae85-2d233e2580e1)
 
 ## 💡 Advanced Features Implemented
 
