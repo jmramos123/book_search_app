@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/book.dart';
 import 'cors_safe_image.dart';
+import 'package:flutter/foundation.dart';
 
 class BookCard extends StatelessWidget {
   final Book book;
@@ -119,8 +120,18 @@ class BookCard extends StatelessWidget {
       return _buildPlaceholder();
     }
 
+    // Start with the normal thumbnail
+    String imageUrl = book.safeThumbnail ?? '';
+
+    // If we're on the web AND it's a Google Books image, route through proxy
+    if (kIsWeb && imageUrl.contains('books.google.com')) {
+      final encoded = Uri.encodeComponent(imageUrl);
+      imageUrl = 'https://calm-night-e9ec.rangulegamer.workers.dev/?url=$encoded';
+    }
+
+
     return CorsSafeImage(
-      imageUrl: book.thumbnail!,
+      imageUrl: imageUrl,
       width: 60,
       height: 80,
       fit: BoxFit.cover,

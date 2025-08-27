@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/book.dart';
 import '../services/database_service.dart';
 import '../widgets/cors_safe_image.dart';
+import 'package:flutter/foundation.dart';
+
 
 class BookDetailsScreen extends StatefulWidget {
   final Book book;
@@ -334,8 +336,16 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
       return _buildPlaceholder();
     }
 
+    String imageUrl = widget.book.thumbnail!;
+
+    // Same fix you used in BookCard
+    if (kIsWeb && imageUrl.contains('books.google.com')) {
+      final encoded = Uri.encodeComponent(imageUrl);
+      imageUrl = 'https://calm-night-e9ec.rangulegamer.workers.dev/?url=$encoded';
+    }
+
     return CorsSafeImage(
-      imageUrl: widget.book.thumbnail!,
+      imageUrl: imageUrl,
       width: 120,
       height: 160,
       fit: BoxFit.cover,
